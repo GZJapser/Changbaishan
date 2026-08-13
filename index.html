@@ -4,36 +4,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#173b30">
-  <meta name="description" content="长白山—延吉三日行程的首日动态路线试运行页面">
-  <title>第一天 延吉至长白山｜高山路线手记</title>
+  <meta name="description" content="按地理方位与相对比例绘制的延吉与长白山多日路线示意图">
+  <title>延吉与长白山｜多日路线手记</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#itinerary">跳到首日行程</a>
+  <a class="skip-link" href="#itinerary">跳到当天行程</a>
 
   <div class="app-shell">
     <header class="topbar">
       <div class="brand-block">
-        <p class="eyebrow">长白山路线手记 · 试运行</p>
+        <p class="eyebrow">长白山路线手记 · 8月13日至15日</p>
         <div class="title-row">
-          <h1>延吉 <span aria-hidden="true">→</span> 长白山</h1>
-          <span class="pilot-badge">第一天</span>
+          <h1 id="pageTitle">延吉 · 长白山</h1>
+          <span class="pilot-badge" id="dayBadge">第一天</span>
         </div>
-        <p class="date-line">2026年8月13日 · 周四 · 北京出发</p>
+        <p class="date-line" id="dateLine">2026年8月13日 · 周四 · 北京→延吉→长白山</p>
+        <p class="compact-status" id="compactStatus" aria-label="当天行程摘要">
+          <span><b id="compactNodeCount">10</b>节点</span><span><b id="compactCrossCityCount">2</b>固定交通</span><strong><span id="compactPendingCount">4</span>待落实</strong>
+        </p>
       </div>
 
-      <div class="header-status" aria-label="行程摘要">
+      <div class="header-status" id="headerStatus" aria-label="当天行程摘要">
         <div class="status-metric">
-          <span class="metric-value">10</span>
+          <span class="metric-value" id="nodeCount">10</span>
           <span class="metric-label">行程节点</span>
         </div>
         <div class="status-metric">
-          <span class="metric-value">2</span>
-          <span class="metric-label">跨城交通</span>
+          <span class="metric-value" id="crossCityCount">2</span>
+          <span class="metric-label">固定交通</span>
         </div>
-        <div class="status-metric warning-metric">
-          <span class="metric-value">3</span>
-          <span class="metric-label">待确认</span>
+        <div class="status-metric warning-metric" id="pendingMetric" aria-label="4项待落实">
+          <span class="metric-value" id="pendingCount">4</span>
+          <span class="metric-label">待落实</span>
         </div>
       </div>
 
@@ -42,53 +45,58 @@
           <svg aria-hidden="true"><use href="#icon-arrows"></use></svg>
           两地比较
         </button>
-        <button class="button button-primary" id="shareButton" type="button">
-          <svg aria-hidden="true"><use href="#icon-share"></use></svg>
-          <span>分享行程</span>
-        </button>
       </div>
     </header>
+
+    <nav class="day-switcher" id="dayTabs" aria-label="选择行程日期">
+      <button class="day-tab is-active" type="button" data-day="day1" aria-pressed="true">
+        <span>8月13日</span><strong>第一天</strong>
+      </button>
+      <button class="day-tab" type="button" data-day="day2" aria-pressed="false">
+        <span>8月14日</span><strong>第二天</strong>
+      </button>
+    </nav>
+    <p class="sr-only" id="dayAnnouncement" aria-live="polite"></p>
+
+    <section class="next-action-panel" id="nextActionPanel" aria-live="polite" aria-label="当天起步"></section>
 
     <main class="workspace">
       <aside class="timeline-panel" id="itinerary" aria-labelledby="timelineTitle">
         <div class="panel-heading">
           <div>
-            <p class="panel-kicker">周四 · 8月13日</p>
+            <p class="panel-kicker" id="timelineKicker">周四 · 8月13日</p>
             <h2 id="timelineTitle">第一天时间线</h2>
           </div>
         </div>
 
         <div class="timeline-list" id="timelineList"></div>
 
-        <div class="timeline-footnote">
+        <div class="timeline-footnote" hidden>
           <svg aria-hidden="true"><use href="#icon-spark"></use></svg>
-          <p>点击任一地点或交通段，地图会同步定位。虚线标记代表尚未确定的地点。</p>
+          <p>点击任一地点或交通段，路线示意图会同步突出显示。虚线标记代表点位仅为示意，计划状态会在卡片中单独标注。</p>
         </div>
       </aside>
 
       <section class="map-panel" aria-labelledby="mapTitle">
         <div class="map-toolbar">
-          <div>
+          <div class="map-heading">
             <p class="panel-kicker">路线与交通</p>
-            <h2 id="mapTitle">行程图集</h2>
+            <h2 id="mapTitle">按比例路线示意图</h2>
+            <p class="map-disclaimer">路线示意 · 保持方位与相对比例 · 非导航地图</p>
           </div>
 
           <div class="map-toolbar-actions">
-            <div class="view-tabs" role="tablist" aria-label="图集范围">
-              <button class="view-tab is-active" type="button" role="tab" aria-selected="true" data-view="overview">全程</button>
-              <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="yanji">延吉市内</button>
-              <button class="view-tab" type="button" role="tab" aria-selected="false" data-view="changbai">二道白河</button>
-            </div>
+            <div class="view-tabs" id="viewTabs" aria-label="路线示意图范围"></div>
 
-            <div class="zoom-controls" aria-label="图集缩放">
-              <button class="zoom-button" id="zoomOutButton" type="button" aria-label="缩小图集" title="缩小">
+            <div class="zoom-controls" aria-label="路线示意图缩放">
+              <button class="zoom-button" id="zoomOutButton" type="button" aria-label="缩小路线示意图" title="缩小">
                 <svg aria-hidden="true"><use href="#icon-minus"></use></svg>
               </button>
               <output class="zoom-value" id="zoomValue" aria-live="polite">100%</output>
-              <button class="zoom-button" id="zoomInButton" type="button" aria-label="放大图集" title="放大">
+              <button class="zoom-button" id="zoomInButton" type="button" aria-label="放大路线示意图" title="放大">
                 <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
               </button>
-              <button class="zoom-button zoom-reset" id="zoomResetButton" type="button" aria-label="恢复图集初始大小" title="恢复初始大小">
+              <button class="zoom-button zoom-reset" id="zoomResetButton" type="button" aria-label="恢复路线示意图初始大小" title="恢复初始大小">
                 <svg aria-hidden="true"><use href="#icon-reset"></use></svg>
               </button>
             </div>
@@ -96,9 +104,9 @@
         </div>
 
         <div class="map-stage" id="mapStage">
-          <svg class="route-map" id="routeMap" viewBox="0 0 1000 680" tabindex="0" role="img" aria-labelledby="mapSvgTitle mapSvgDesc">
-            <title id="mapSvgTitle">延吉至长白山首日行程地图</title>
-            <desc id="mapSvgDesc">图集显示机场、景点、餐厅、市场、火车站以及二道白河待确认地点，并将相邻地点以路线连接。可使用按钮或鼠标滚轮缩放，放大后可拖动查看。</desc>
+          <svg class="route-map" id="routeMap" viewBox="0 0 1000 680" preserveAspectRatio="xMidYMid meet" tabindex="0" role="group" aria-labelledby="mapSvgTitle mapSvgDesc">
+            <title id="mapSvgTitle">延吉与长白山当天路线示意图</title>
+            <desc id="mapSvgDesc">按地理方位与相对比例绘制当天地点，并将相邻地点以路线连接。它不是导航地图，不提供定位功能；可使用按钮或鼠标滚轮缩放，放大后可拖动查看。</desc>
 
             <defs>
               <linearGradient id="paperWash" x1="0" x2="1" y1="0" y2="1">
@@ -142,11 +150,12 @@
             <g id="labelLayer"></g>
           </svg>
 
-          <div class="map-legend" aria-label="地图图例">
-            <span><i class="legend-dot confirmed"></i>已定位</span>
-            <span><i class="legend-dot provisional"></i>待确认</span>
-            <span><i class="legend-line"></i>当天路线</span>
-          </div>
+        </div>
+
+        <div class="map-legend" aria-label="路线示意图图例">
+          <span><i class="legend-dot confirmed"></i>已定位</span>
+          <span><i class="legend-dot provisional"></i>示意点位</span>
+          <span><i class="legend-line"></i>当天路线</span>
         </div>
 
         <div class="map-detail-dock" id="mapDetailDock">
@@ -174,10 +183,7 @@
     </main>
   </div>
 
-  <div class="share-toast" id="shareToast" role="status" aria-live="polite" hidden></div>
-
   <svg class="icon-sprite" aria-hidden="true">
-    <symbol id="icon-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.7 10.7 6.6-4.2M8.7 13.3l6.6 4.2"></path></symbol>
     <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
     <symbol id="icon-minus" viewBox="0 0 24 24"><path d="M5 12h14"></path></symbol>
     <symbol id="icon-reset" viewBox="0 0 24 24"><path d="M4 7v5h5M20 17v-5h-5M6.1 16.4A8 8 0 0 0 19 9M17.9 7.6A8 8 0 0 0 5 15"></path></symbol>
@@ -191,6 +197,7 @@
     <symbol id="icon-hotel" viewBox="0 0 24 24"><path d="M3 20V9M21 20V9M3 16h18M7 16v-5h4a3 3 0 0 1 3 3v2M3 20h18"></path></symbol>
     <symbol id="icon-tree" viewBox="0 0 24 24"><path d="m12 2-5 7h3l-5 7h14l-5-7h3l-5-7ZM12 16v6"></path></symbol>
     <symbol id="icon-car" viewBox="0 0 24 24"><path d="m5 16-2-2v-3l2-5h14l2 5v3l-2 2H5ZM7 16v3M17 16v3M7 12h.01M17 12h.01M4 10h16"></path></symbol>
+    <symbol id="icon-bus" viewBox="0 0 24 24"><path d="M6 3h12a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3ZM3 9h18M7 14h.01M17 14h.01M7 19v2M17 19v2"></path></symbol>
     <symbol id="icon-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"></circle><path d="m10 22 2-7-3-3 2-5 5 3 3 1M12 15l4 3 1 4M9 12l-4 3"></path></symbol>
     <symbol id="icon-spark" viewBox="0 0 24 24"><path d="m12 2 1.4 5.1L18 9l-4.6 1.9L12 16l-1.4-5.1L6 9l4.6-1.9L12 2ZM19 15l.7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7L19 15Z"></path></symbol>
     <symbol id="icon-close" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"></path></symbol>
